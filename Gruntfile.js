@@ -7,6 +7,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jade');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-contrib-connect');
 
     grunt.loadNpmTasks('grunt-coffeelint');
 
@@ -273,6 +274,26 @@ module.exports = function(grunt) {
                     interrupt: true
                 }
             }
+        },
+        connect:{
+            server: {
+                options: {
+                    base: './build',
+                    port: '8000',
+                    hostname: '*',
+                    open: true,
+                    middleware: function(connect, options, middlewares) {
+                        middlewares.push(function(req, res, next){
+                            var fs = require('fs')
+                            fs.readFile('./build/index.html', function (err, data) {
+                                if (err) throw err;
+                                res.end(data)
+                            });
+                        })
+                        return middlewares;
+                    }
+                }
+            }
         }
 
     });
@@ -282,5 +303,5 @@ module.exports = function(grunt) {
     grunt.registerTask('build', ['clean:build', 'copy:build', 'coffee:app', 'jade:app', 'jade:index', 'sass:app', 'clean:temp', 'tags:appjs', 'tags:libcss', 'tags:appcss']);
     grunt.registerTask('test', ['clean:test', 'coffee:test', 'jasmine:app']);
     grunt.registerTask('min', ['clean:min', 'copy:min', 'html2js:app', 'replace:min', 'useref', 'concat', 'uglify', 'cssmin', 'clean:tempmin']);
-
+    grunt.registerTask('serve', ['clean:build', 'copy:build', 'coffee:app', 'jade:app', 'jade:index', 'sass:app', 'clean:temp', 'tags:appjs', 'tags:libcss', 'tags:appcss', 'connect:server', 'watch:app']);
 };
