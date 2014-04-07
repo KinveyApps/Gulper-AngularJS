@@ -2,6 +2,9 @@ nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
     .container
         .navbar-header
             a.navbar-brand(ui-sref="index") Gulper
+        ul.nav.navbar-nav.navbar-right
+            li
+                a(ng-click="logout()") Logout
 .jumbotron
     .container
         .row
@@ -9,9 +12,3 @@ nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
                 h1 Gulper
                     br
                     small XMPP Chat Demo App
-.container
-    .row
-        .col-sm-12.text-center
-            button.btn.btn-lg.btn-facebook(ng-click="login()")
-                i.fa.fa-facebook
-                |  | Login with Facebook

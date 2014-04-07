@@ -1,5 +1,9 @@
 @import "../../lib/bootstrap-sass/vendor/assets/stylesheets/bootstrap";
 
+body {
+  margin-top: $navbar-height;
+}
+
 .full-width {
   width: 100%;
 }

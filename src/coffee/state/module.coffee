@@ -4,6 +4,7 @@ angular.module 'app.state', ['ui.router']
 
              angular.forEach [
                'app.state.login'
+               'app.state.index'
              ], (stateName) ->
 
                state = $injector.get(stateName)

@@ -5,12 +5,17 @@ angular.module 'app', [
   'app.service',
   'ui.router',
   'facebook',
-  'kinvey'
+  'kinvey',
+  'ngStorage'
 ]
 
-  .config ['$urlRouterProvider', '$facebookProvider',
-    ($urlRouterProvider, $facebookProvider) ->
+  .config ['$urlRouterProvider', '$facebookProvider', '$kinveyProvider',
+    ($urlRouterProvider, $facebookProvider, $kinveyProvider) ->
       $urlRouterProvider.otherwise '/login'
       $facebookProvider.init
         appId: '229011427294758'
+      $kinveyProvider.init
+        appKey: 'kid_TTfnnXtg6O'
+        appSecret: '3118b76c646343ae94ace92116e9b20c'
+        storage: 'local'
     ]
