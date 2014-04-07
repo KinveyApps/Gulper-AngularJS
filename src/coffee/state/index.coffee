@@ -6,6 +6,7 @@ angular.module 'app.state'
   templateUrl: 'html/index.html',
   controller: 'app.control.index',
   resolve:
+
     me: ['$kinvey', '$state', '$q', ($kinvey, $state, $q) ->
       deferred = $q.defer()
       $kinvey.User.current().$promise.then ((response) ->
@@ -16,5 +17,12 @@ angular.module 'app.state'
         $state.go 'login'
       )
       return deferred.promise
+    ]
+
+    users: ['$kinvey', ($kinvey) ->
+      $kinvey.User.query
+        query:
+          _id:
+            $exists: true
     ]
 }

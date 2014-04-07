@@ -1,12 +1,15 @@
 angular.module 'app.control'
 
-.controller 'app.control.index', ['$scope', '$state', '$facebook', '$kinvey', 'me', ($scope, $state, $facebook, $kinvey, me) ->
+.controller 'app.control.index', [
+  '$scope', '$state', '$facebook', '$kinvey', 'me', 'users',
+  ($scope, $state, $facebook, $kinvey, me, users) ->
 
-  $scope.me = me
+    $scope.me = me
+    $scope.users = users
 
-  $scope.logout = ->
-    $facebook.logout().then ->
-      $kinvey.User.logout().$promise.then ->
-        $state.go 'login'
+    $scope.logout = ->
+      $facebook.logout().then ->
+        $kinvey.User.logout().$promise.then ->
+          $state.go 'login'
 
 ]
