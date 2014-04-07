@@ -19,3 +19,6 @@ angular.module 'app', [
         appSecret: '3118b76c646343ae94ace92116e9b20c'
         storage: 'local'
     ]
+  .run ['$kinvey', ($kinvey) ->
+    $kinvey.alias 'room', 'Room'
+  ]

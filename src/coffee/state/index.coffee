@@ -19,10 +19,19 @@ angular.module 'app.state'
       return deferred.promise
     ]
 
-    users: ['$kinvey', ($kinvey) ->
+    users: ['$kinvey', 'me', ($kinvey, me) ->
       $kinvey.User.query
         query:
           _id:
+            $ne: me._id
+    ]
+
+    rooms: ['$kinvey', ($kinvey) ->
+      $kinvey.Room.query
+        query:
+          _id:
             $exists: true
+        resolve: 'participants'
+        retainReferences: false
     ]
 }

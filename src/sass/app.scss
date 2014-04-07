@@ -1,26 +1,57 @@
 @import "../../lib/bootstrap-sass/vendor/assets/stylesheets/bootstrap";
 
 body {
-  margin-top: $navbar-height;
+  margin-top: $navbar-height + 12px;
 }
 
-$brand-facebook:                  #3b5998 !default;
-$btn-facebook-color:              #fff !default;
-$btn-facebook-bg:                 $brand-facebook !default;
-$btn-facebook-border:             darken($btn-facebook-bg, 5%) !default;
+$brand-facebook: #3b5998 !default;
+$btn-facebook-color: #fff !default;
+$btn-facebook-bg: $brand-facebook !default;
+$btn-facebook-border: darken($btn-facebook-bg, 5%) !default;
 
 .btn-facebook {
   @include button-variant($btn-facebook-color, $btn-facebook-bg, $btn-facebook-border);
 }
 
 $user-image-size: 44px;
+$user-image-margin: 3px;
+$user-image-distance: 12px;
 
 .img-user {
   width: $user-image-size;
   height: $user-image-size;
+  margin-left: $user-image-distance;
 }
 
 .navbar-nav > li > a {
-  padding-top: 3px;
-  padding-bottom: 3px;
+  padding-top: $user-image-margin;
+  padding-bottom: $user-image-margin;
+}
+
+li.dropdown > ul.dropdown-menu {
+  width: 100%;
+}
+
+.user-list {
+  margin-top: 73px;
+}
+
+.col-0 {
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.media {
+  padding: 15px;
+  cursor: pointer;
+}
+
+.user-list-entry {
+  border-radius: $nav-pills-border-radius;
+
+  &:hover {
+    background-color: $gray-lighter;
+  }
 }

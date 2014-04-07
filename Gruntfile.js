@@ -280,7 +280,7 @@ module.exports = function(grunt) {
                 options: {
                     base: './build',
                     port: '8000',
-                    hostname: '*',
+                    hostname: 'gulper.dev',
                     open: true,
                     middleware: function(connect, options, middlewares) {
                         middlewares.push(function(req, res, next){
