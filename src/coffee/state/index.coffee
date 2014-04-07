@@ -11,7 +11,7 @@ angular.module 'app.state'
       $kinvey.User.current().$promise.then ((response) ->
         console.log response
         deferred.resolve response
-      ), ( (error)->
+      ), ((error)->
         console.log error
         $state.go 'login'
       )
