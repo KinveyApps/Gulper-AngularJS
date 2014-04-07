@@ -25,6 +25,6 @@ nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
     .col-sm-9
         ul.nav.nav-pills
             li(ng-repeat="room in rooms")
-                a
+                a(ui-sref=".room({_id:room._id})")
                     h4 {{roomName(room)}}
-        div(ui-view)
+        div(ui-view="")

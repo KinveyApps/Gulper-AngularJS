@@ -2,7 +2,7 @@ angular.module 'app.state'
 
 .constant 'app.state.index', {
   name: 'index',
-  url: '/',
+  url: '',
   templateUrl: 'html/index.html',
   controller: 'app.control.index',
   resolve:
