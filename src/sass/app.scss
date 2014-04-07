@@ -1,0 +1,14 @@
+@import "../../lib/bootstrap-sass/vendor/assets/stylesheets/bootstrap";
+
+.full-width {
+  width: 100%;
+}
+
+$brand-facebook:                  #3b5998 !default;
+$btn-facebook-color:              #fff !default;
+$btn-facebook-bg:                 $brand-facebook !default;
+$btn-facebook-border:             darken($btn-facebook-bg, 5%) !default;
+
+.btn-facebook {
+  @include button-variant($btn-facebook-color, $btn-facebook-bg, $btn-facebook-border);
+}
