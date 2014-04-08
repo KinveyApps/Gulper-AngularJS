@@ -1,12 +1,19 @@
 angular.module 'app.control'
 
 .controller 'app.control.index', [
-  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'me', 'users', 'rooms',
-  ($scope, $state, $stateParams, $facebook, $kinvey, me, users, rooms) ->
+  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms',
+  ($scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms) ->
 
     $scope.me = me
     $scope.users = users
     $scope.rooms = rooms
+
+    PubNub.ngSubscribe
+      channel: me._id
+
+    $scope.$on (PubNub.ngMsgEv me._id), (event, payload) ->
+      room = new $kinvey.Room payload
+      $scope.rooms.push room
 
     $scope.logout = ->
       $facebook.logout().then ->
