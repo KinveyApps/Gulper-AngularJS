@@ -17,10 +17,16 @@ $user-image-size: 44px;
 $user-image-margin: 3px;
 $user-image-distance: 12px;
 
+$chat-pane-height: 300px;
+$small-spacing: 6px;
+$large-spacing: 15px;
+$user-top-spacing: 73px;
+
 .img-user {
   width: $user-image-size;
   height: $user-image-size;
   margin-left: $user-image-distance;
+  margin-right: $user-image-distance;
 }
 
 .navbar-nav > li > a {
@@ -33,22 +39,24 @@ li.dropdown > ul.dropdown-menu {
 }
 
 .user-list {
-  margin-top: 73px;
-  height: 300px;
+  margin-top: $user-top-spacing;
+  height: $chat-pane-height;
   overflow-y: auto;
 }
 
 .chat-pane {
-  margin-top: 15px;
-  margin-bottom: 6px;
-  height: 300px;
   overflow-y: auto;
+  margin-top: $large-spacing;
+  margin-bottom: $small-spacing;
+  padding-top: $small-spacing;
+  padding-bottom: $small-spacing;
+  height: $chat-pane-height;
   border-radius: $nav-pills-border-radius;
   border: 1px solid $gray-lighter;
 }
 
 .media {
-  padding: 15px;
+  padding: $large-spacing;
   cursor: pointer;
 }
 
@@ -61,7 +69,7 @@ li.dropdown > ul.dropdown-menu {
 }
 
 .message-row {
-  padding-bottom: 6px;
+  padding-bottom: $small-spacing;
   margin-left: 0;
   margin-right: 0;
 }
