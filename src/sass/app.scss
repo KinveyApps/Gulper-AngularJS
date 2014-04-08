@@ -64,6 +64,10 @@ li.dropdown > ul.dropdown-menu {
   border: 1px solid $gray-lighter;
 }
 
+.room-options-pane {
+  padding-top: $large-spacing;
+}
+
 .media {
   padding: $large-spacing;
   cursor: pointer;

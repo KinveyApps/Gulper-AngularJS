@@ -26,4 +26,9 @@ angular.module 'app.control'
           w: room._acl.w
       message.$save().then ->
         $scope.text = ''
+
+    $scope.leaveRoom = ->
+      $kinvey.rpc 'leaveRoom',
+        room: room
+        user: me
 ]

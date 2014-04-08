@@ -11,6 +11,16 @@ angular.module 'app.control'
     PubNub.ngSubscribe
       channel: me._id
 
+    getRoomIndex = (id) ->
+      foundRoom = null
+      idx = 0
+      for room in rooms
+        do (room) ->
+          if room._id == id
+            foundRoom = idx
+          idx++
+      foundRoom
+
     $scope.$on (PubNub.ngMsgEv me._id), (event, payload) ->
       console.log payload
       if payload.message.type == 'new-room'
@@ -20,6 +30,15 @@ angular.module 'app.control'
           retainReferences: false
         room.$promise.then (room) ->
           $scope.rooms.push room
+      else if payload.message.type == 'left-room'
+        if payload.message.userId = me._id
+          rooms.splice getRoomIndex(payload.message.roomId), 1
+        else
+          idx = getRoomIndex(payload.message.roomId)
+          newRoom = $kinvey.Room.get
+            _id: id
+          newRoom.$promise.then ->
+            rooms[idx] = newRoom
 
     $scope.logout = ->
         $kinvey.User.logout().$promise.then ->
