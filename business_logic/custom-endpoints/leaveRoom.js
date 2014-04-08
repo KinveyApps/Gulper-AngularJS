@@ -13,7 +13,7 @@ function onRequest(request, response, modules){
     modules.collectionAccess.collection('room').update({
       _id: modules.collectionAccess.objectID(room)
     },{
-      $pull: {"participants": {"_id": userId.toString() } }
+      $pull: {"participants": {"_id": userId.toString() }, '_acl.r': userId.toString(), '_acl.w': userId.toString() }
     }, {}, function(err){
       if(err){
         modules.logger.info(err);
