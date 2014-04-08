@@ -10,6 +10,11 @@ nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
         small XMPP Chat Demo App
 .container
   .col-sm-12.text-center
-    button.btn.btn-lg.btn-facebook(ng-click="login()")
+    button.btn.btn-lg.btn-facebook(ng-click="fbLogin()")
       i.fa.fa-facebook
       | | Login with Facebook
+    br
+    br
+    button.btn.btn-lg.btn-google-plus(ng-click="gpLogin()")
+      i.fa.fa-google-plus
+      | | Login with Google Plus

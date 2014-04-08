@@ -14,7 +14,8 @@
     "ngstorage": "~0.3.0",
     "angular-moment": "~0.6.2",
     "pubnub-angular": "~1.1.0",
-    "pubnub": "git://github.com/pubnub/javascript.git"
+    "pubnub": "git://github.com/pubnub/javascript.git",
+    "angular-google-plus": "git://github.com/ninjatronic/angular-google-plus.git#45458747931791d85884d59b63663fe5754c4f85"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.14"
@@ -25,8 +26,5 @@
       "scss": "lib/*.scss",
       "img": "img/*.png"
     }
-  },
-  "resolutions": {
-    "angular": "1.2.16"
   }
 }
