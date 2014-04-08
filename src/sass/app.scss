@@ -4,6 +4,10 @@ body {
   margin-top: $navbar-height + 12px;
 }
 
+a {
+  cursor: pointer;
+}
+
 $brand-facebook: #3b5998 !default;
 $btn-facebook-color: #fff !default;
 $btn-facebook-bg: $brand-facebook !default;
