@@ -32,7 +32,7 @@ angular.module 'app.control'
           user.$signup().then loginSuccess, loginFailure
 
       $scope.fbLogin = ->
-        $facebook.fbLogin()
+        $facebook.login()
           .then kinveyFbAuth, loginFailure
 
       $scope.gpLogin = ->

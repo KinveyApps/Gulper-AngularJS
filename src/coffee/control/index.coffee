@@ -16,7 +16,6 @@ angular.module 'app.control'
       $scope.rooms.push room
 
     $scope.logout = ->
-      $facebook.logout().then ->
         $kinvey.User.logout().$promise.then ->
           $state.go 'login'
 
@@ -65,4 +64,12 @@ angular.module 'app.control'
 
     $scope.chatterIsActive = ->
       $state.current.name == 'index.chatter'
+
+    $scope.userName = (user) ->
+      if user._socialIdentity.facebook
+        user._socialIdentity.facebook.name
+      else if user._socialIdentity.google
+        user._socialIdentity.google.given_name + ' ' + user._socialIdentity.google.family_name
+      else
+        user.username
 ]
