@@ -22,10 +22,7 @@ angular.module 'app', [
         storage: 'local'
       $httpProvider.interceptors.push 'v3yk1n-interceptor'
     ]
-  .run ['$kinvey', 'PubNub', ($kinvey, PubNub) ->
+  .run ['$kinvey', ($kinvey) ->
     $kinvey.alias 'room', 'Room'
     $kinvey.alias 'message', 'Message'
-    PubNub.init
-      publish_key: 'pub-c-54950570-ed66-4f98-8b3b-d101960f63ec'
-      subscribe_key: 'sub-c-ea5fd726-be91-11e3-b6e0-02ee2ddab7fe'
   ]
