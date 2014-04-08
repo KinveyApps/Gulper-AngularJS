@@ -5,6 +5,7 @@ angular.module 'app.state'
   url: '',
   templateUrl: 'html/index.html',
   controller: 'app.control.index',
+  abstract: true
   resolve:
 
     me: ['$kinvey', '$state', '$q', 'PubNub', ($kinvey, $state, $q, PubNub) ->

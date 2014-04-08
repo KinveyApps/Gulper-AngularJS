@@ -9,7 +9,7 @@ angular.module 'app.state'
     me: ['$kinvey', '$state', '$q', ($kinvey, $state, $q) ->
       deferred = $q.defer()
       $kinvey.User.current().$promise.then (->
-        $state.go 'index'
+        $state.go 'index.chatter'
       ), (->
         deferred.resolve null
       )

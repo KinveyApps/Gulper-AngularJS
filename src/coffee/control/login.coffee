@@ -4,11 +4,8 @@ angular.module 'app.control'
   ['$scope', '$kinvey', '$facebook', '$moment', '$state', 'PubNub',
     ($scope, $kinvey, $facebook, $moment, $state, PubNub) ->
 
-      loginSuccess = (user) ->
-        PubNub.uuid (uuid)->
-          console.log(uuid)
-          return uuid
-        $state.go 'index'
+      loginSuccess = ->
+        $state.go 'index.chatter'
 
       loginFailure = (error) ->
         console.log error

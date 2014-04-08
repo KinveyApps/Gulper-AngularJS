@@ -16,7 +16,7 @@ angular.module 'app.state'
         retainReferences: false
     ]
 
-    messages: ['$kinvey', '$stateParams', 'rooms', ($kinvey, $stateParams, rooms) ->
+    messages: ['$kinvey', ($kinvey) ->
       $kinvey.Message.query
         query:
           _id:
