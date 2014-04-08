@@ -1,35 +1,36 @@
 doctype html
 html(ng-app="app")
-    head
+  head
 
-        script(type="text/javascript", src="lib/angular/angular.js")
-        script(type="text/javascript", src="lib/angular-base64/angular-base64.js")
-        script(type="text/javascript", src="lib/angular-kinvey/kinvey.js")
-        script(type="text/javascript", src="lib/angular-resource/angular-resource.js")
-        script(type="text/javascript", src="lib/angular-ui-router/release/angular-ui-router.js")
-        script(type="text/javascript", src="lib/ngFacebook/dev/src/unmin/ngFacebook.js")
-        script(type="text/javascript", src="lib/moment/moment.js")
-        script(type="text/javascript", src="lib/ngstorage/ngStorage.js")
-        script(type="text/javascript", src="lib/jquery/dist/jquery.js")
-        script(type="text/javascript", src="lib/bootstrap-sass/vendor/assets/javascripts/bootstrap.js")
-        script(type="text/javascript", src="lib/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown.js")
+    script(type="text/javascript", src="/lib/angular/angular.js")
+    script(type="text/javascript", src="/lib/angular-base64/angular-base64.js")
+    script(type="text/javascript", src="/lib/angular-kinvey/kinvey.js")
+    script(type="text/javascript", src="/lib/angular-resource/angular-resource.js")
+    script(type="text/javascript", src="/lib/angular-ui-router/release/angular-ui-router.js")
+    script(type="text/javascript", src="/lib/ngFacebook/dev/src/unmin/ngFacebook.js")
+    script(type="text/javascript", src="/lib/moment/moment.js")
+    script(type="text/javascript", src="/lib/ngstorage/ngStorage.js")
+    script(type="text/javascript", src="/lib/jquery/dist/jquery.js")
+    script(type="text/javascript", src="/lib/bootstrap-sass/vendor/assets/javascripts/bootstrap.js")
+    script(type="text/javascript", src="/lib/bootstrap-sass/vendor/assets/javascripts/bootstrap/dropdown.js")
+    script(type="text/javascript", src="/lib/angular-moment/angular-moment.js")
 
-        link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet")
+    link(href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet")
 
-        //build:css LIBVERSION.min.css
-        //libcss start
-        //libcss end
-        //endbuild
+    //build:css LIBVERSION.min.css
+    //libcss start
+    //libcss end
+    //endbuild
 
-        //build:css APPVERSION.min.css
-        //appcss start
-        //appcss end
-        //endbuild
+    //build:css APPVERSION.min.css
+    //appcss start
+    //appcss end
+    //endbuild
 
-    body
-        div(ui-view)
+  body
+    div(ui-view)
 
-        //build:js APPVERSION.min.js
-        //appjs start
-        //appjs end
-        //endbuild
+    //build:js APPVERSION.min.js
+    //appjs start
+    //appjs end
+    //endbuild

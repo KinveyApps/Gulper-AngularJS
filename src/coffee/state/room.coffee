@@ -9,5 +9,14 @@ angular.module 'app.state'
 
     room: ['$kinvey', '$stateParams', ($kinvey, $stateParams) ->
       $kinvey.Room.get $stateParams
+        .$promise
+    ]
+
+    messages: ['$kinvey', '$stateParams', 'room', ($kinvey, $stateParams, room) ->
+      $kinvey.Message.query
+        query:
+          room: room.$reference()
+        resolve: 'from'
+        retainReferences: false
     ]
 }

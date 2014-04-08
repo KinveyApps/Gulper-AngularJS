@@ -1,8 +1,8 @@
 angular.module 'app.control'
 
 .controller 'app.control.index', [
-  '$scope', '$state', '$facebook', '$kinvey', 'me', 'users', 'rooms',
-  ($scope, $state, $facebook, $kinvey, me, users, rooms) ->
+  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'me', 'users', 'rooms',
+  ($scope, $state, $stateParams, $facebook, $kinvey, me, users, rooms) ->
 
     $scope.me = me
     $scope.users = users
@@ -31,7 +31,7 @@ angular.module 'app.control'
             foundRoom = room
 
       if foundRoom
-        foundRoom
+        $state.go('.room', {_id: foundRoom._id})
       else
         room = new $kinvey.Room
           _acl:
@@ -52,4 +52,7 @@ angular.module 'app.control'
               name += ', '
             name += participant._socialIdentity.facebook.name
       name
+
+    $scope.isActive = (room) ->
+      $state.params._id == room._id
 ]

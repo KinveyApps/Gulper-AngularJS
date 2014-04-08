@@ -10,7 +10,6 @@ angular.module 'app.state'
     me: ['$kinvey', '$state', '$q', ($kinvey, $state, $q) ->
       deferred = $q.defer()
       $kinvey.User.current().$promise.then ((response) ->
-        console.log response
         deferred.resolve response
       ), ((error)->
         console.log error

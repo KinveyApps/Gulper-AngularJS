@@ -6,7 +6,8 @@ angular.module 'app', [
   'ui.router',
   'facebook',
   'kinvey',
-  'ngStorage'
+  'ngStorage',
+  'angularMoment'
 ]
 
   .config ['$urlRouterProvider', '$facebookProvider', '$kinveyProvider',
@@ -21,4 +22,5 @@ angular.module 'app', [
     ]
   .run ['$kinvey', ($kinvey) ->
     $kinvey.alias 'room', 'Room'
+    $kinvey.alias 'message', 'Message'
   ]
