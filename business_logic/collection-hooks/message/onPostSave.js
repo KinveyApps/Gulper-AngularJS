@@ -19,6 +19,7 @@ function onPostSave(request, response, modules){
           }
         }
         response.body.from = userObj;
+        //response.body.type = 'message';
 
         //Setup pubnub
         var pubnub = modules.pubnub.init({
@@ -175,7 +176,9 @@ function onPostSave(request, response, modules){
               })
           },
           error: function(e) {
-            modules.logger.info(e);
+            modules.logger.info('Publish Error ');
+            modules.logger.error(e);
+            modules.logger.error(arguments);
             response.complete(500);
           }
         });
