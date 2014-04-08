@@ -8,14 +8,18 @@ angular.module 'app', [
   'kinvey',
   'ngStorage',
   'angularMoment'
-  'pubnub.angular.service'
+  'pubnub.angular.service',
+  'googleplus'
 ]
 
-  .config ['$urlRouterProvider', '$facebookProvider', '$kinveyProvider', '$httpProvider',
-    ($urlRouterProvider, $facebookProvider, $kinveyProvider, $httpProvider) ->
+  .config ['$urlRouterProvider', '$facebookProvider', '$kinveyProvider', '$httpProvider', 'GooglePlusProvider',
+    ($urlRouterProvider, $facebookProvider, $kinveyProvider, $httpProvider, GooglePlusProvider) ->
       $urlRouterProvider.otherwise '/login'
       $facebookProvider.init
         appId: '229011427294758'
+      GooglePlusProvider.init
+        clientId: '1069600990715-qr2quvqt0nl1nr8vkdtljtu0jnb22igv.apps.googleusercontent.com'
+        apiKey: 'AIzaSyCmqKjIhh5ySTPDprOkfKHkKdPq6_FFR1Y'
       $kinveyProvider.init
         appKey: 'kid_eeM4Dtly69'
         appSecret: 'f7b5cd34caa047c286e6a3ba09204117'
