@@ -26,5 +26,8 @@
       "scss": "lib/*.scss",
       "img": "img/*.png"
     }
+  },
+  "resolutions": {
+    "angular": "1.2.16"
   }
 }

@@ -11,7 +11,7 @@ function onPostSave(request, response, modules){
       message: {type: 'new-room', id: response.body._id},
       callback: function(datas) {
         publishCount++;
-        if(publishCount-1 == response.body.particiapnts.length){
+        if(publishCount-1 == response.body.participants.length){
 	        response.continue();
         }
       },
