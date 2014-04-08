@@ -12,8 +12,14 @@ angular.module 'app.control'
       channel: me._id
 
     $scope.$on (PubNub.ngMsgEv me._id), (event, payload) ->
-      room = new $kinvey.Room payload
-      $scope.rooms.push room
+      console.log payload
+      if payload.message.type == 'new-room'
+        room = $kinvey.Room.get
+          _id: payload.message.id
+          resolve: 'participants'
+          retainReferences: false
+        room.$promise.then (room) ->
+          $scope.rooms.push room
 
     $scope.logout = ->
         $kinvey.User.logout().$promise.then ->
