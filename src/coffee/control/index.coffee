@@ -62,4 +62,7 @@ angular.module 'app.control'
 
     $scope.isActive = (room) ->
       $state.params._id == room._id
+
+    $scope.chatterIsActive = ->
+      $state.current.name == 'index.chatter'
 ]

@@ -6,6 +6,7 @@ angular.module 'app.state', ['ui.router']
                'app.state.login'
                'app.state.index'
                'app.state.room'
+               'app.state.chatter'
              ], (stateName) ->
 
                state = $injector.get(stateName)
