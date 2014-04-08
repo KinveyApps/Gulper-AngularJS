@@ -7,6 +7,16 @@ angular.module 'app.control'
     $scope.me = me
     $scope.users = users
     $scope.rooms = rooms
+    $scope.notifications = {}
+
+    for room in rooms
+      do (room) ->
+        $scope.notifications[room._id] = 0
+        PubNub.ngSubscribe
+          channel: room._id
+        $scope.$on (PubNub.ngMsgEv room._id), ->
+          $scope.$apply ->
+            $scope.notifications[room._id]++
 
     PubNub.ngSubscribe
       channel: me._id
@@ -22,7 +32,6 @@ angular.module 'app.control'
       foundRoom
 
     $scope.$on (PubNub.ngMsgEv me._id), (event, payload) ->
-      console.log payload
       if payload.message.type == 'new-room'
         room = $kinvey.Room.get
           _id: payload.message.id

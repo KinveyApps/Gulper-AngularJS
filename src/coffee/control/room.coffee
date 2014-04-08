@@ -7,13 +7,14 @@ angular.module 'app.control'
     $scope.room = room
     $scope.messages = messages
 
+    $scope.$parent.notifications[room._id] = 0
+
     PubNub.ngSubscribe
       channel: room._id
 
     $scope.$on (PubNub.ngMsgEv room._id), (event, payload) ->
       $scope.$apply ->
         message = new $kinvey.Message (JSON.parse payload.message)
-        console.log message
         $scope.messages.push message
 
     $scope.send = (text) ->
