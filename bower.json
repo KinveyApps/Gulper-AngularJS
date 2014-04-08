@@ -12,7 +12,9 @@
     "moment": "~2.5.1",
     "momentjs": "~2.5.1",
     "ngstorage": "~0.3.0",
-    "angular-moment": "~0.6.2"
+    "angular-moment": "~0.6.2",
+    "pubnub-angular": "~1.1.0",
+    "pubnub": "git://github.com/pubnub/javascript.git"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.14"
