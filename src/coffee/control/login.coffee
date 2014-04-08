@@ -1,10 +1,13 @@
 angular.module 'app.control'
 
 .controller 'app.control.login',
-  ['$scope', '$kinvey', '$facebook', '$moment', '$state',
-    ($scope, $kinvey, $facebook, $moment, $state) ->
+  ['$scope', '$kinvey', '$facebook', '$moment', '$state', 'PubNub',
+    ($scope, $kinvey, $facebook, $moment, $state, PubNub) ->
 
       loginSuccess = (user) ->
+        PubNub.uuid (uuid)->
+          console.log(uuid)
+          return uuid
         $state.go 'index'
 
       loginFailure = (error) ->
