@@ -4,6 +4,10 @@ body {
   margin-top: $navbar-height + 12px;
 }
 
+a {
+  cursor: pointer;
+}
+
 $brand-facebook: #3b5998 !default;
 $btn-facebook-color: #fff !default;
 $btn-facebook-bg: $brand-facebook !default;
@@ -62,6 +66,10 @@ li.dropdown > ul.dropdown-menu {
   height: $chat-pane-height;
   border-radius: $nav-pills-border-radius;
   border: 1px solid $gray-lighter;
+}
+
+.room-options-pane {
+  padding-top: $large-spacing;
 }
 
 .media {

@@ -1,14 +1,30 @@
-.chat-pane
-  .row.message-row(ng-repeat="message in messages")
-    .col-sm-12(ng-class="{'text-right': message.from._id == me._id}")
-      img.img-rounded.img-user(ng-src="http://graph.facebook.com/{{message.from._socialIdentity.facebook.id}}/picture", ng-class="{'pull-left' : message.from._id != me._id, 'pull-right' : message.from._id == me._id}")
-      span.text-muted {{message.from._socialIdentity.facebook.name}} (
-        span(am-time-ago="message._kmd.ect")
-        |)
-      br
-      | {{message.text}}
-form(role="form")
-  .input-group
-    input.form-control(type="text", placeholder="Message", ng-model="text")
-    span.input-group-btn
-      button.btn.btn-default(ng-click="send(text)") Send
+.row
+  .col-sm-10
+    .chat-pane
+      .row.message-row(ng-repeat="message in messages")
+        .col-sm-12(ng-class="{'text-right': message.from._id == me._id}")
+          img.img-rounded.img-user(ng-src="http://graph.facebook.com/{{message.from._socialIdentity.facebook.id}}/picture", ng-class="{'pull-left' : message.from._id != me._id, 'pull-right' : message.from._id == me._id}")
+          span.text-muted {{message.from._socialIdentity.facebook.name}} (
+            span(am-time-ago="message._kmd.ect")
+            |)
+          br
+          | {{message.text}}
+    form(role="form")
+      .input-group
+        input.form-control(type="text", placeholder="Message", ng-model="text")
+        span.input-group-btn
+          button.btn.btn-default(ng-click="send(text)") Send
+  .col-sm-2.room-options-pane
+    ul.nav.nav-pills.nav-stacked
+      li
+        a(ng-click="leaveRoom()")
+          i.fa.fa-sign-out
+          |  Leave Room
+      li
+        a
+          i.fa.fa-plus(ng-click="addUser()")
+          |  Add User
+      li
+        a
+          i.fa.fa-edit(ng-click="rename()")
+          |  Rename Room
