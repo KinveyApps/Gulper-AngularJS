@@ -11,15 +11,16 @@ angular.module 'app', [
   'pubnub.angular.service'
 ]
 
-  .config ['$urlRouterProvider', '$facebookProvider', '$kinveyProvider',
-    ($urlRouterProvider, $facebookProvider, $kinveyProvider) ->
+  .config ['$urlRouterProvider', '$facebookProvider', '$kinveyProvider', '$httpProvider',
+    ($urlRouterProvider, $facebookProvider, $kinveyProvider, $httpProvider) ->
       $urlRouterProvider.otherwise '/login'
       $facebookProvider.init
         appId: '229011427294758'
       $kinveyProvider.init
-        appKey: 'kid_TTfnnXtg6O'
-        appSecret: '3118b76c646343ae94ace92116e9b20c'
+        appKey: 'kid_eeM4Dtly69'
+        appSecret: 'f7b5cd34caa047c286e6a3ba09204117'
         storage: 'local'
+      $httpProvider.interceptors.push 'v3yk1n-interceptor'
     ]
   .run ['$kinvey', 'PubNub', ($kinvey, PubNub) ->
     $kinvey.alias 'room', 'Room'
