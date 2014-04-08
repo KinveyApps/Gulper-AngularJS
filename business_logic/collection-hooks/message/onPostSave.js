@@ -9,7 +9,7 @@ function onPostSave(request, response, modules){
         modules.logger.error('Cant find user object.');
         response.complete(404)
       }else{
-        userObj = {
+        var userObj = {
           _id: obj._id,
           _socialIdentity:{
             facebook: {
@@ -69,7 +69,8 @@ function onPostSave(request, response, modules){
                         var completionCB = function(){
                           //Handle finalizing the request.
                           notificationCount--;
-                          if(notificationCount == 0){
+                          if(notificationCount <= 0){
+                            modules.logger.error('Notified People');
                             response.continue();
                           }
                         };
@@ -161,8 +162,12 @@ function onPostSave(request, response, modules){
                           });
                       };
 
-                      for(var i=0;i<notHere.length;i++){
-                        notify(notHere[i])
+                      if(notHere.length){
+                        for(var i=0;i<notHere.length;i++){
+                          notify(notHere[i])
+                        }
+                      }else{
+                        response.continue();
                       }
                     }
                   })
