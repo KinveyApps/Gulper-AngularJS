@@ -24,5 +24,6 @@ angular.module 'app.control'
         _acl:
           r: room._acl.r
           w: room._acl.w
-      message.$save()
+      message.$save().then ->
+        $scope.text = ''
 ]
