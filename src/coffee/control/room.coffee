@@ -11,8 +11,10 @@ angular.module 'app.control'
       channel: room._id
 
     $scope.$on (PubNub.ngMsgEv room._id), (event, payload) ->
-      message = new $kinvey.Message payload
-      $scope.messages.push message
+      $scope.$apply ->
+        message = new $kinvey.Message (JSON.parse payload.message)
+        console.log message
+        $scope.messages.push message
 
     $scope.send = (text) ->
       message = new $kinvey.Message
@@ -22,7 +24,5 @@ angular.module 'app.control'
         _acl:
           r: room._acl.r
           w: room._acl.w
-      message.$save().then ->
-        $scope.text = ''
-        $scope.messages.push message
+      message.$save()
 ]
