@@ -10,13 +10,9 @@ angular.module 'app.control'
     $scope.notifications = {}
 
     leftRoom = (userId, roomId) ->
-      console.log userId+' left the room'
-      console.log 'i am '+me._id
       if userId == me._id
-        console.log 'i left a room'
         rooms.splice getRoomIndex(roomId), 1
         if $state.params._id == roomId
-          console.log 'but i\'m still there'
           $state.go 'index.chatter'
       else
         idx = getRoomIndex(roomId)
@@ -32,6 +28,10 @@ angular.module 'app.control'
           leftRoom(message.userId, message.roomId)
         else if message.type == 'room-renamed'
           room.name = message.name
+        else if message.type == 'room-deleted'
+          rooms.splice getRoomIndex(room._id), 1
+          if $state.params._id == room._id
+            $state.go 'index.chatter'
         else
           if $state.params._id != room._id
             $scope.notifications[room._id]++
