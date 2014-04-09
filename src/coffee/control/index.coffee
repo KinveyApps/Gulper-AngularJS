@@ -25,13 +25,13 @@ angular.module 'app.control'
             console.log 'got the user media'
             call.answer stream
             console.log 'answered the call'
-            call.on 'stream', (remoteStream ->
+            call.on 'stream', ((remoteStream) ->
               $scope.$apply ->
                 console.log 'opening the modal and dispalying the video'
                 $modal.open
                   templateUrl: 'html/call.html'
                 $('#call').prop 'src', (URL.createObjectURL stream)
-            ), (err) -> console.log err
+            ), ((err) -> console.log err)
 
     $scope.call = (user) ->
       calloptions =
@@ -39,10 +39,10 @@ angular.module 'app.control'
         audio: true
       navigator.getMedia calloptions, (stream) ->
         call = $peer.call user._id, stream
-        call.on 'stream', (remoteStream ->
+        call.on 'stream', ((remoteStream) ->
           $scope.$apply ->
             # show in a canvas
-        ), (err) -> console.log err
+        ), ((err) -> console.log err)
 
 
 
