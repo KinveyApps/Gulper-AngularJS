@@ -11,7 +11,7 @@ angular.module 'app.control'
     $scope.inCall = false
 
     $peer.create me._id
-    getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    navigator.getMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
     $peer.on 'call', (call) ->
       console.log 'receiving a call'
@@ -21,7 +21,7 @@ angular.module 'app.control'
           calloptions =
             video: true
             audio: true
-          getUserMedia calloptions, (stream) ->
+          navigator.getMedia calloptions, (stream) ->
             console.log 'got the user media'
             call.answer stream
             console.log 'answered the call'
@@ -37,7 +37,7 @@ angular.module 'app.control'
       calloptions =
         video: true
         audio: true
-      getUserMedia calloptions, (stream) ->
+      navigator.getMedia calloptions, (stream) ->
         $peer.call user._id, stream
         call.on 'stream', (remoteStream ->
           $scope.$apply ->
