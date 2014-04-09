@@ -24,20 +24,7 @@ angular.module 'app.control'
             call.answer stream
             call.on 'stream', (remoteStream) ->
               $scope.$apply ->
-                $modal.open
-                  templateUrl: 'html/call.html'
-                url = (URL.createObjectURL remoteStream)
-                console.log url
-                console.log $('#call')
-                tryShowVideo = ->
-                  setTimeout ->
-                    if $('#call').length > 0
-                      $('#call').prop 'src', url
-                    else
-                      tryShowVideo()
-                  , 10
-                tryShowVideo()
-
+                showCallStream call, remoteStream
             , (err) ->
               console.log err
 
@@ -49,9 +36,32 @@ angular.module 'app.control'
         call = $peer.call user._id, stream
         call.on 'stream', ((remoteStream) ->
           $scope.$apply ->
-            # show in a canvas
+            showCallStream call, remoteStream
         ), ((err) -> console.log err)
 
+    showCallStream = (call, stream)->
+      $scope.inCall = true
+
+      $modal.open
+        templateUrl: 'html/call.html'
+        controller: ['$scope', 'call', ($scope, call) ->
+          call.on 'close', ->
+            $scope.$apply ->
+              $close()
+        ]
+        resolve:
+          call: -> call
+      .then call.close, call.close
+
+      url = (URL.createObjectURL stream)
+      tryShowVideo = ->
+        setTimeout ->
+          if $('#call').length > 0
+            $('#call').prop 'src', url
+          else
+            tryShowVideo()
+        , 10
+      tryShowVideo()
 
 
     $window.setKeyOnUserAndSave = (key, value, cb, eb) ->
