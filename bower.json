@@ -17,7 +17,8 @@
     "pubnub": "git://github.com/pubnub/javascript.git",
     "angular-google-plus": "git://github.com/ninjatronic/angular-google-plus.git#6917e6a310a218e2d82aa718db19a26aabc621ee",
     "bootswatch-scss": "~3.0.3",
-    "angular-bootstrap": "~0.10.0"
+    "angular-bootstrap": "~0.10.0",
+    "peerjs": "~0.3.8"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.14"

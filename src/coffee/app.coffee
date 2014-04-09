@@ -13,8 +13,8 @@ angular.module 'app', [
   'ui.bootstrap'
 ]
 
-  .config ['$urlRouterProvider', '$facebookProvider', '$kinveyProvider', '$httpProvider', 'GooglePlusProvider',
-    ($urlRouterProvider, $facebookProvider, $kinveyProvider, $httpProvider, GooglePlusProvider) ->
+  .config ['$urlRouterProvider', '$facebookProvider', '$kinveyProvider', '$httpProvider', 'GooglePlusProvider', '$peerProvider',
+    ($urlRouterProvider, $facebookProvider, $kinveyProvider, $httpProvider, GooglePlusProvider, $peerProvider) ->
       $urlRouterProvider.otherwise '/login'
       $facebookProvider.init
         appId: '229011427294758'
@@ -26,6 +26,7 @@ angular.module 'app', [
         appSecret: 'f7b5cd34caa047c286e6a3ba09204117'
         storage: 'local'
       $httpProvider.interceptors.push 'v3yk1n-interceptor'
+      $peerProvider.init '3x0jom3i17fd2t9'
     ]
   .run ['$kinvey', ($kinvey) ->
     $kinvey.alias 'room', 'Room'
