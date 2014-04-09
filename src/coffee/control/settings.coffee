@@ -21,6 +21,13 @@ angular.module 'app.control'
       else
         user.username
 
+    $scope.userPicture = (user) ->
+      if user._socialIdentity.facebook
+        picture = 'http://graph.facebook.com/'+user._socialIdentity.facebook.id+'/picture'
+        picture
+      else if user._socialIdentity.google
+        user.picture
+
     $scope.save = ->
       $scope.me.$save().then ->
         $state.go 'index.chatter'

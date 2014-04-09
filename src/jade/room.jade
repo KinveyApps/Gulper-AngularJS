@@ -1,15 +1,15 @@
 .row
   .col-sm-3.participants-row
-    img.img-rounded.img-user(ng-src="http://graph.facebook.com/{{admin._socialIdentity.facebook.id}}/picture")
+    img.img-rounded.img-user(ng-src="{{userPicture(admin)}}")
     | {{userName(admin)}} - Admin
   .col-sm-7.participants-row.text-right
-    img.img-rounded.img-user(ng-repeat="participant in room.participants", ng-src="http://graph.facebook.com/{{participant._socialIdentity.facebook.id}}/picture", ng-show="participant._id != admin._id")
+    img.img-rounded.img-user(ng-repeat="participant in room.participants", ng-src="{{userPicture(participant)}}", ng-show="participant._id != admin._id")
 .row
   .col-sm-10
     .chat-pane
       .row.message-row(ng-repeat="message in messages")
         .col-sm-12(ng-class="{'text-right': message.from._id == me._id}")
-          img.img-rounded.img-user(ng-src="http://graph.facebook.com/{{message.from._socialIdentity.facebook.id}}/picture", ng-class="{'pull-left' : message.from._id != me._id, 'pull-right' : message.from._id == me._id}")
+          img.img-rounded.img-user(ng-src="{{userPicture(message.from)}}", ng-class="{'pull-left' : message.from._id != me._id, 'pull-right' : message.from._id == me._id}")
           span.text-muted {{message.from._socialIdentity.facebook.name}} (
             span(am-time-ago="message._kmd.ect")
             |)

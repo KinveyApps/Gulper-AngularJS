@@ -147,13 +147,10 @@ angular.module 'app.control'
       $state.current.name == 'index.chatter'
 
     $scope.userPicture = (user) ->
-      console.log 'getting user picture'
-      console.log user
       if user._socialIdentity.facebook
-        console.log 'doing facebook picture: http://graph.facebook.com/{'+user._socialIdentity.facebook.id+'/picture'
-        'http://graph.facebook.com/{'+user._socialIdentity.facebook.id+'/picture'
-      if user._socialIdentity.google
-        console.log 'doing other picture: '+user.picture
+        picture = 'http://graph.facebook.com/'+user._socialIdentity.facebook.id+'/picture'
+        picture
+      else if user._socialIdentity.google
         user.picture
 
     $scope.userName = (user) ->

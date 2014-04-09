@@ -6,7 +6,7 @@ nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
       li.dropdown
         a.dropdown-toggle(data-toggle="dropdown")
           | {{userName(me)}}&nbsp;
-          img.img-rounded.img-user-lg(ng-src="http://graph.facebook.com/{{me._socialIdentity.facebook.id}}/picture")
+          img.img-rounded.img-user-lg(ng-src="{{userPicture(me)}}")
         ul.dropdown-menu
           li
             a(ng-click="logout()")
@@ -18,7 +18,7 @@ nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
               |  Settings
 .col-sm-6.col-sm-offset-3
   h3
-    img.img-rounded.img-user-lg(ng-src="http://graph.facebook.com/{{me._socialIdentity.facebook.id}}/picture")
+    img.img-rounded.img-user-lg(ng-src="{{userPicture(me)}}")
     |&nbspMy Settings
   hr
   form(role="form")
