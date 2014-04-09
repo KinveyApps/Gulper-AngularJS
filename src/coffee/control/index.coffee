@@ -1,13 +1,17 @@
 angular.module 'app.control'
 
 .controller 'app.control.index', [
-  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms', '$subscriber', '$modal',
-  ($scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms, $subscriber, $modal) ->
+  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms', '$subscriber', '$modal', '$window',
+  ($scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms, $subscriber, $modal, $window) ->
 
     $scope.me = me
     $scope.users = users
     $scope.rooms = rooms
     $scope.notifications = {}
+
+    $window.setKeyOnUserAndSave = (key, value, cb, eb) ->
+      me[key] = value
+      user.$save().then cb, eb
 
     leftRoom = (userId, roomId) ->
       if userId == me._id

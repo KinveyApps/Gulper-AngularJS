@@ -1,8 +1,10 @@
 angular.module 'app.control'
 
 .controller 'app.control.login',
-  ['$scope', '$kinvey', '$facebook', '$moment', '$state', 'PubNub', 'GooglePlus',
-    ($scope, $kinvey, $facebook, $moment, $state, PubNub, GooglePlus) ->
+  ['$scope', '$kinvey', '$facebook', '$moment', '$state', 'PubNub', 'GooglePlus', '$window',
+    ($scope, $kinvey, $facebook, $moment, $state, PubNub, GooglePlus, $window) ->
+
+      $window.setKeyOnUserAndSave = null
 
       loginSuccess = ->
         $state.go 'index.chatter'

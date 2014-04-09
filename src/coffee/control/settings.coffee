@@ -1,8 +1,12 @@
 angular.module 'app.control'
 
 .controller 'app.control.settings', [
-  '$scope', '$state', '$kinvey', 'me',
-  ($scope, $state, $kinvey, me) ->
+  '$scope', '$state', '$kinvey', 'me', '$window',
+  ($scope, $state, $kinvey, me, $window) ->
+
+    $window.setKeyOnUserAndSave = (key, value, cb, eb) ->
+      me[key] = value
+      user.$save().then cb, eb
 
     $scope.me = me
     $scope.logout = ->
