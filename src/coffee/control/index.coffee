@@ -51,7 +51,7 @@ angular.module 'app.control'
         ]
         resolve:
           call: -> call
-      .then call.close, call.close
+      .result.then call.close, call.close
 
       url = (URL.createObjectURL stream)
       tryShowVideo = ->
