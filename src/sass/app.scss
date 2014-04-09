@@ -39,6 +39,10 @@ $small-spacing: 6px;
 $large-spacing: 15px;
 $user-top-spacing: 73px;
 
+.jumbotron {
+  margin-top: 0-$large-spacing;
+}
+
 .img-user {
   width: $user-image-size;
   height: $user-image-size;

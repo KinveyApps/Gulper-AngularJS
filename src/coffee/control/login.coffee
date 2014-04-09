@@ -23,15 +23,18 @@ angular.module 'app.control'
           user.$signup().then loginSuccess, loginFailure
 
       kinveyGpAuth = (gpResponse) ->
-        user = new $kinvey.User
-          _id: ''
-          _socialIdentity:
-            google:
-              access_token: gpResponse.access_token
-              expires_in: gpResponse.access_token
-        console.log user
-        user.$login().then loginSuccess, ->
-          user.$signup().then loginSuccess, loginFailure
+        GooglePlus.getUser().then (gpUser) ->
+          user = new $kinvey.User
+            _id: ''
+            picture: gpUser.picture
+            _socialIdentity:
+              google:
+                access_token: gpResponse.access_token
+                expires_in: gpResponse.access_token
+            google: gpUser
+          console.log user
+          user.$login().then loginSuccess, ->
+            user.$signup().then loginSuccess, loginFailure
 
       $scope.fbLogin = ->
         $facebook.login()
