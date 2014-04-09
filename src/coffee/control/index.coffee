@@ -12,6 +12,7 @@ angular.module 'app.control'
 
     $peer.create me._id
     navigator.getMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 
     $peer.on 'call', (call) ->
       console.log 'receiving a call'
