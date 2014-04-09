@@ -87,12 +87,19 @@ angular.module 'app.control'
 
     $scope.makeCall = ->
       callee = null
-      for participant in room.participants
-        unless participant._id == me._id
+      for participant in $scope.room.participants
+        if participant._id != $scope.me._id
           callee = participant._id
+          break
+
       if callee?
-        $scope.call(callee)
+        $scope.call({_id: callee})
+      else
+        console.log 'NOT CALLING.'
 
     $scope.canDeleteRoom = ->
       me._id == room._acl.creator
+
+    $scope.canMakeCall = ->
+      $scope.room.participants.length == 2
 ]
