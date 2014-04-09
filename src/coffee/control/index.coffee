@@ -1,13 +1,50 @@
 angular.module 'app.control'
 
 .controller 'app.control.index', [
-  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms', '$subscriber', '$modal', '$window',
-  ($scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms, $subscriber, $modal, $window) ->
+  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms', '$subscriber', '$modal', '$window', '$peer',
+  ($scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms, $subscriber, $modal, $window, $peer) ->
 
     $scope.me = me
     $scope.users = users
     $scope.rooms = rooms
     $scope.notifications = {}
+    $scope.inCall = false
+
+    $peer.create me._id
+    getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+    $peer.on 'call', (call) ->
+      console.log 'receiving a call'
+      $scope.$apply ->
+        if !$scope.inCall
+          console.log 'not in a call'
+          calloptions:
+            video: true
+            audio: true
+          getUserMedia calloptions, (stream) ->
+            console.log 'got the user media'
+            call.answer stream
+            console.log 'answered the call'
+            call.on 'stream', (remoteStream ->
+              $scope.$apply ->
+                console.log 'opening the modal and dispalying the video'
+                $modal.open
+                  templateUrl: 'html/call.html'
+                $('#call').prop 'src', (URL.createObjectURL stream)
+            ), (err) -> console.log err
+
+    $scope.call = (user) ->
+      calloptions:
+        video: true
+        audio: true
+      getUserMedia calloptions, (stream) ->
+        $peer.call user._id, stream
+        call.on 'stream', (remoteStream ->
+          $scope.$apply ->
+            # show in a canvas
+        ), (err) -> console.log err
+
+
 
     $window.setKeyOnUserAndSave = (key, value, cb, eb) ->
       me[key] = value
