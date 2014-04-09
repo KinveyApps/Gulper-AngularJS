@@ -28,7 +28,6 @@ angular.module 'app.control'
     handleRoomNotification = (event, payload) ->
       $scope.$apply ->
         message = JSON.parse payload.message
-        console.log message
         if message.type == 'left-room'
           leftRoom(message.userId, message.roomId)
         else
@@ -101,17 +100,20 @@ angular.module 'app.control'
           $scope.rooms.push room
 
     $scope.roomName = (room) ->
-      count = 0
-      name = ''
-      for participant in room.participants
-        do (participant) ->
-          if participant._id != me._id
-            if count++ > 0
-              name += ', '
-            name += participant._socialIdentity.facebook.name
-      if name.length == 0
-        name = 'So Lonely'
-      name
+      if room.name && room.name.length > 0
+        room.name
+      else
+        count = 0
+        name = ''
+        for participant in room.participants
+          do (participant) ->
+            if participant._id != me._id
+              if count++ > 0
+                name += ', '
+              name += participant._socialIdentity.facebook.name
+        if name.length == 0
+          name = 'So Lonely'
+        name
 
     $scope.isActive = (room) ->
       $state.params._id == room._id

@@ -10,6 +10,7 @@ angular.module 'app', [
   'angularMoment'
   'pubnub.angular.service',
   'googleplus'
+  'ui.bootstrap'
 ]
 
   .config ['$urlRouterProvider', '$facebookProvider', '$kinveyProvider', '$httpProvider', 'GooglePlusProvider',

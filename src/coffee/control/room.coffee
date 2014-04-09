@@ -1,8 +1,8 @@
 angular.module 'app.control'
 
 .controller 'app.control.room', [
-  '$scope', '$state', '$stateParams', '$kinvey', 'PubNub', 'room', 'messages', 'me', '$subscriber',
-  ($scope, $state, $stateParams, $kinvey, PubNub, room, messages, me, $subscriber) ->
+  '$scope', '$state', '$stateParams', '$kinvey', 'PubNub', 'room', 'messages', 'me', '$subscriber', '$modal',
+  ($scope, $state, $stateParams, $kinvey, PubNub, room, messages, me, $subscriber, $modal) ->
 
     $scope.room = room
     $scope.messages = messages
@@ -38,6 +38,21 @@ angular.module 'app.control'
     $scope.delete = ->
       room.$delete().then ->
         $state.go 'index.chatter'
+
+    $scope.rename = ->
+      $modal.open
+        templateUrl: 'html/rename.html'
+        controller: ['$scope', '$modalInstance', 'room', ($scope, $modalInstance, room) ->
+          $scope.room = room
+
+          $scope.ok = ->
+            $scope.room.$save()
+            $scope.room.$promise.then ->
+              $modalInstance.close()
+        ]
+        resolve:
+          room: () -> room
+
 
     $scope.canLeaveRoom = ->
       me._id != room._acl.creator

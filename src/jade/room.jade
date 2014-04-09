@@ -21,12 +21,12 @@
           i.fa.fa-sign-out
           |  Leave Room
       li
-        a
-          i.fa.fa-plus(ng-click="addUser()")
+        a(ng-click="addUser()")
+          i.fa.fa-plus
           |  Add User
       li
-        a
-          i.fa.fa-edit(ng-click="rename()")
+        a(ng-click="rename()")
+          i.fa.fa-edit
           |  Rename Room
       li(ng-class="{'disabled': !canDeleteRoom()}")
         a(ng-click="delete()")
