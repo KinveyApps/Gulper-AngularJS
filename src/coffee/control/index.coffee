@@ -38,7 +38,7 @@ angular.module 'app.control'
         video: true
         audio: true
       navigator.getMedia calloptions, (stream) ->
-        $peer.call user._id, stream
+        call = $peer.call user._id, stream
         call.on 'stream', (remoteStream ->
           $scope.$apply ->
             # show in a canvas
