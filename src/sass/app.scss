@@ -90,6 +90,7 @@ li.dropdown > ul.dropdown-menu {
 
 .user-list-entry {
   border-radius: $nav-pills-border-radius;
+  margin: $small-spacing;
 
   &:hover {
     background-color: $gray-lighter;

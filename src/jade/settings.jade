@@ -1,0 +1,45 @@
+nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
+  .container
+    .navbar-header
+      a.navbar-brand(ui-sref="index.chatter") Gulper
+    ul.nav.navbar-nav.navbar-right
+      li.dropdown
+        a.dropdown-toggle(data-toggle="dropdown")
+          | {{userName(me)}}&nbsp;
+          img.img-rounded.img-user-lg(ng-src="http://graph.facebook.com/{{me._socialIdentity.facebook.id}}/picture")
+        ul.dropdown-menu
+          li
+            a(ng-click="logout()")
+              i.fa.fa-sign-out
+              |  Logout
+          li
+            a(ui-sref="settings")
+              i.fa.fa-cog
+              |  Settings
+.col-sm-6.col-sm-offset-3
+  h3
+    img.img-rounded.img-user-lg(ng-src="http://graph.facebook.com/{{me._socialIdentity.facebook.id}}/picture")
+    |&nbspMy Settings
+  hr
+  form(role="form")
+    h4 Contact Settings
+    .form-group
+      label(for="email") Email Address
+      input.form-control(type="email", ng-model="user.email", placeholder="example@me.com")
+    .form-group
+      label(for="phone") Phone Number inc. Country Code
+      input.form-control(type="text", ng-model="user.phone", placeholder="+4471234567890")
+    h4 Address Settings
+    .form-group
+      label(for="name") Address
+      input.form-control(type="text", ng-model="user.address.name", placeholder="Name")
+    .form-group
+      input.form-control(type="text", ng-model="user.address.address1", placeholder="Line 1")
+    .form-group
+      input.form-control(type="text", ng-model="user.address.city", placeholder="City")
+    .form-group
+      input.form-control(type="text", ng-model="user.address.state", placeholder="State")
+    .form-group
+      input.form-control(type="text", ng-model="user.address.country", placeholder="Country")
+    h4.text-right
+      button.btn.btn-success(ng-click="save()") Save
