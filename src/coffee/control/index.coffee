@@ -15,24 +15,31 @@ angular.module 'app.control'
     window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 
     $peer.on 'call', (call) ->
-      console.log 'receiving a call'
       $scope.$apply ->
         if !$scope.inCall
-          console.log 'not in a call'
           calloptions =
             video: true
             audio: true
           navigator.getMedia calloptions, (stream) ->
-            console.log 'got the user media'
             call.answer stream
-            console.log 'answered the call'
-            call.on 'stream', ((remoteStream) ->
+            call.on 'stream', (remoteStream) ->
               $scope.$apply ->
-                console.log 'opening the modal and dispalying the video'
                 $modal.open
                   templateUrl: 'html/call.html'
-                $('#call').prop 'src', (URL.createObjectURL stream)
-            ), ((err) -> console.log err)
+                url = (URL.createObjectURL remoteStream)
+                console.log url
+                console.log $('#call')
+                tryShowVideo = ->
+                  setTimeout ->
+                    if $('#call').length > 0
+                      $('#call').prop 'src', url
+                    else
+                      tryShowVideo()
+                  , 10
+                tryShowVideo()
+
+            , (err) ->
+              console.log err
 
     $scope.call = (user) ->
       calloptions =
