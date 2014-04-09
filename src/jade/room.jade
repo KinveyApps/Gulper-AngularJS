@@ -16,7 +16,7 @@
           button.btn.btn-default(ng-click="send(text)") Send
   .col-sm-2.room-options-pane
     ul.nav.nav-pills.nav-stacked
-      li(ng-class="{'disabled': canLeaveRoom()}")
+      li(ng-class="{'disabled': !canLeaveRoom()}")
         a(ng-click="leaveRoom()")
           i.fa.fa-sign-out
           |  Leave Room
@@ -28,3 +28,7 @@
         a
           i.fa.fa-edit(ng-click="rename()")
           |  Rename Room
+      li(ng-class="{'disabled': !canDeleteRoom()}")
+        a(ng-click="delete()")
+          i.fa.fa-trash-o
+          |  Delete Room

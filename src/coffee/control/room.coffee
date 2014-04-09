@@ -35,6 +35,13 @@ angular.module 'app.control'
             room: room
             user: me
 
+    $scope.delete = ->
+      room.$delete().then ->
+        $state.go 'index.chatter'
+
     $scope.canLeaveRoom = ->
+      me._id != room._acl.creator
+
+    $scope.canDeleteRoom = ->
       me._id == room._acl.creator
 ]
