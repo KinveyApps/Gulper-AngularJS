@@ -99,6 +99,10 @@ li.dropdown > ul.dropdown-menu {
   &:hover {
     background-color: $gray-lighter;
   }
+  opacity: .2;
+  &.online{
+    opacity: 1;
+  }
 }
 
 .message-row {

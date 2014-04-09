@@ -19,7 +19,7 @@ nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
 .container
   .col-sm-2.user-list
     ul.media-list
-      li.media.user-list-entry(ng-repeat="user in users", ng-click="openRoom(user)")
+      li.media.user-list-entry(ng-repeat="user in users", ng-click="openRoom(user)", ng-class="{'online': userStati[user._id]}")
         a.pull-left
           img.media-object.img-rounded.img-user(ng-src="{{userPicture(user)}}")
         .media-body

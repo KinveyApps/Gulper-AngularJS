@@ -13,6 +13,7 @@ function onRequest(request, response, modules){
       return response.complete(500);
     }
     if(!user){
+      modules.logger.info('Unable to find user')
       return response.complete(400);
     }
     var userId = user._id;
@@ -20,14 +21,14 @@ function onRequest(request, response, modules){
     modules.collectionAccess.collection('room').update({
       _id: modules.collectionAccess.objectID(room)
     },{
-      $push: {"participants": {"_id": userId.toString() }, '_acl.r': userId.toString(), '_acl.w': userId.toString() }
+      $push: {"participants": {"_type":"KinveyRef","_collection":"user","_id": userId.toString() }, '_acl.r': userId.toString(), '_acl.w': userId.toString() }
     }, {}, function(err){
       if(err){
         modules.logger.info(err);
         response.complete(500)
       }else{
-
-        //Notify everyone in the room that the person has left
+        modules.logger.info('Notify everyone in the room of the join');
+        //Notify everyone in the room that the person has joined
         pubnub.publish({
           channel: room,
           message: JSON.stringify({
@@ -36,7 +37,20 @@ function onRequest(request, response, modules){
             roomId: room
           }),
           callback: function() {
-            response.complete(200)
+            modules.logger.info('Everyone notified');
+            modules.logger.info(userId+" - "+room);
+            pubnub.publish({
+              channel: userId.toString(),
+              message: {type: 'new-room', id: room.toString()},
+              callback: function() {
+                modules.logger.info('Notified the new person of the room');
+                response.complete(200);
+              },
+              error: function(e) {
+                modules.logger.info(e);
+                response.complete(500);
+              }
+            });
           },
           error: function(e) {
             modules.logger.info(e);

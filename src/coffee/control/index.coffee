@@ -27,7 +27,6 @@ angular.module 'app.control'
     handleRoomNotification = (event, payload, room) ->
       $scope.$apply ->
         message = JSON.parse payload.message
-        console.log message
         if message.type == 'left-room'
           leftRoom(message.userId, message.roomId)
         else if message.type == 'room-renamed'
@@ -69,6 +68,43 @@ angular.module 'app.control'
 
     PubNub.ngSubscribe
       channel: me._id
+
+    PubNub.ngSubscribe
+      channel: 'online'
+
+    $scope.userStati = {}
+
+    setOnlineStatus = (uuid, status)->
+      foundUser = null
+      for user in $scope.users
+        console.log user._id, uuid
+        if user._id == uuid
+          foundUser = user;
+          break;
+
+      if foundUser?
+        $scope.$apply ->
+          $scope.userStati[foundUser._id] = status
+          console.log 'Set user status: ', status, uuid
+      else
+        console.log 'Unable to find user with ID to set status on', uuid
+
+
+    $scope.$on PubNub.ngPrsEv('online'), (event, payload)->
+      if payload.event.service == 'Presence'
+        for users in payload.event.uuids
+          setOnlineStatus(users.uuid, true)
+
+    PubNub.ngHereNow {channel: 'online'}
+
+    $scope.$on PubNub.ngPrsEv('online'), (event, payload)->
+      $scope.$apply ->
+        if payload.channel == 'online'
+          if payload.event.action == 'leave'
+            setOnlineStatus(payload.event.uuid, false)
+          else if payload.event.action == 'join'
+            setOnlineStatus(payload.event.uuid, true)
+
 
     getRoomIndex = (id) ->
       foundRoom = null
@@ -132,10 +168,9 @@ angular.module 'app.control'
         for participant in room.participants
           do (participant) ->
             if participant._id != me._id
-              console.log participant
               if count++ > 0
                 name += ', '
-              name += participant._socialIdentity.facebook.name
+              name += $scope.userName(participant)
         if name.length == 0
           name = 'So Lonely'
         name
@@ -154,6 +189,9 @@ angular.module 'app.control'
         user.picture
 
     $scope.userName = (user) ->
+      if user._type == 'KinveyRef'
+        return 'KinveyRef'
+
       if user._socialIdentity.facebook
         user._socialIdentity.facebook.name
       else if user._socialIdentity.google
