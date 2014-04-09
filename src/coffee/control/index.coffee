@@ -47,11 +47,17 @@ angular.module 'app.control'
         controller: ['$scope', 'call', ($scope, call) ->
           call.on 'close', ->
             $scope.$apply ->
-              $close()
+              console.log 'closing event'
+              $scope.$close()
         ]
         resolve:
           call: -> call
-      .result.then call.close, call.close
+      .result.then ->
+        console.log 'closing call'
+        call.close()
+      , ->
+        console.log 'closing call erback'
+        call.close()
 
       url = (URL.createObjectURL stream)
       tryShowVideo = ->
