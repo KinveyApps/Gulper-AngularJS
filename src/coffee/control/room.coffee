@@ -12,7 +12,6 @@ angular.module 'app.control'
 
     $scope.$on (PubNub.ngMsgEv room._id), (event, payload) ->
       $scope.$apply ->
-        console.log payload
         payload.message = JSON.parse payload.message
         if !payload.message.type
           message = new $kinvey.Message payload.message
@@ -30,7 +29,12 @@ angular.module 'app.control'
       message.$save()
 
     $scope.leaveRoom = ->
-      $kinvey.rpc 'leaveRoom',
-        room: room
-        user: me
+      $scope.send '...has left the room'
+        .then ->
+          $kinvey.rpc 'leaveRoom',
+            room: room
+            user: me
+
+    $scope.canLeaveRoom = ->
+      me._id == room._acl.creator
 ]

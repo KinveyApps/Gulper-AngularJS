@@ -10,20 +10,25 @@ angular.module 'app.control'
     $scope.notifications = {}
 
     leftRoom = (userId, roomId) ->
-      if userId = me._id
+      console.log userId+' left the room'
+      console.log 'i am '+me._id
+      if userId == me._id
+        console.log 'i left a room'
         rooms.splice getRoomIndex(roomId), 1
-        if $state.params.id == roomId
-          $state.go '.chatter'
+        if $state.params._id == roomId
+          console.log 'but i\'m still there'
+          $state.go 'index.chatter'
       else
         idx = getRoomIndex(roomId)
         newRoom = $kinvey.Room.get
-          _id: id
+          _id: roomId
         newRoom.$promise.then ->
           rooms[idx] = newRoom
 
     handleRoomNotification = (event, payload) ->
       $scope.$apply ->
         message = JSON.parse payload.message
+        console.log message
         if message.type == 'left-room'
           leftRoom(message.userId, message.roomId)
         else
@@ -84,7 +89,7 @@ angular.module 'app.control'
             foundRoom = room
 
       if foundRoom
-        $state.go('.room', {_id: foundRoom._id})
+        $state.go('index.room', {_id: foundRoom._id})
       else
         room = new $kinvey.Room
           _acl:
@@ -104,6 +109,8 @@ angular.module 'app.control'
             if count++ > 0
               name += ', '
             name += participant._socialIdentity.facebook.name
+      if name.length == 0
+        name = 'So Lonely'
       name
 
     $scope.isActive = (room) ->
