@@ -99,7 +99,7 @@ angular.module 'app.control'
 
     $scope.$on PubNub.ngPrsEv('online'), (event, payload)->
       if payload.channel == 'online'
-        if payload.event.action == 'leave'
+        if payload.event.action == 'leave' || payload.event.action == 'timeout'
           setOnlineStatus(payload.event.uuid, false)
         else if payload.event.action == 'join'
           setOnlineStatus(payload.event.uuid, true)
