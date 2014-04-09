@@ -85,6 +85,14 @@ angular.module 'app.control'
     $scope.canLeaveRoom = ->
       me._id != room._acl.creator
 
+    $scope.makeCall = ->
+      callee = null
+      for participant in room.participants
+        unless participant._id == me._id
+          callee = participant._id
+      if callee?
+        $scope.call(callee)
+
     $scope.canDeleteRoom = ->
       me._id == room._acl.creator
 ]

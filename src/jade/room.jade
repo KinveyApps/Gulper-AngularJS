@@ -38,3 +38,7 @@
         a(ng-click="delete()")
           i.fa.fa-trash-o
           |  Delete Room
+      li(ng-class="{'disabled': room.particiapnts().length != 2}")
+        a(ng-click="makeCall()")
+          i.fa.fa-video-camera
+          | Start Video Chat
