@@ -17,6 +17,10 @@ angular.module 'app.control'
         if !payload.message.type
           message = new $kinvey.Message payload.message
           $scope.messages.push message
+        else if payload.message.type == 'join-room'
+          room.$get
+            resolve: 'participants'
+            retainReferences: false
 
     $scope.send = (text) ->
       message = new $kinvey.Message
@@ -54,6 +58,29 @@ angular.module 'app.control'
         resolve:
           room: () -> room
 
+    $scope.addUser = ->
+      ($modal.open
+        templateUrl: 'html/addUser.html'
+        controller: ['$scope', '$modalInstance', 'users', ($scope, $modalInstance, users) ->
+          $scope.users = users
+        ]
+        scope: $scope
+        resolve:
+          users: ['$kinvey', ($kinvey) ->
+            participantIds = []
+            for participant in room.participants
+              do (participant) ->
+                participantIds.push participant._id
+            console.log participantIds
+            $kinvey.User.query
+              query:
+                _id:
+                  $nin: participantIds
+          ]
+      ).result.then (user) ->
+        $kinvey.rpc 'addUserToRoom',
+          user: user.$reference()
+          room: room.$reference()
 
     $scope.canLeaveRoom = ->
       me._id != room._acl.creator

@@ -16,10 +16,9 @@ angular.module 'app.control'
           $state.go 'index.chatter'
       else
         idx = getRoomIndex(roomId)
-        newRoom = $kinvey.Room.get
-          _id: roomId
-        newRoom.$promise.then ->
-          rooms[idx] = newRoom
+        rooms[idx].$get
+          resolve: 'participants'
+          retainReferences: false
 
     handleRoomNotification = (event, payload, room) ->
       $scope.$apply ->
@@ -35,6 +34,12 @@ angular.module 'app.control'
               templateUrl: 'html/deleted.html')
             .result.then ->
               $state.go 'index.chatter'
+        else if message.type = 'join-room'
+          roomId = message.roomId
+          idx = getRoomIndex(roomId)
+          rooms[idx].$get
+            resolve: 'participants'
+            retainReferences: false
         else
           if $state.params._id != room._id
             $scope.notifications[room._id]++
@@ -108,16 +113,24 @@ angular.module 'app.control'
       if room.name && room.name.length > 0
         room.name
       else
+        console.log 'constructing the room name from '+room.participants.length+' participant names'
         count = 0
         name = ''
         for participant in room.participants
           do (participant) ->
+            console.log 'examining participant '+participant._id
             if participant._id != me._id
+              console.log 'it\'s not me'
+              console.log participant
               if count++ > 0
+                console.log 'adding a spacer'
                 name += ', '
+              console.log 'adding the name'
               name += participant._socialIdentity.facebook.name
+              console.log 'name is currently '+name
         if name.length == 0
           name = 'So Lonely'
+        console.log 'came up with name: '+name
         name
 
     $scope.isActive = (room) ->

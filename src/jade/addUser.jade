@@ -1,0 +1,13 @@
+.modal-header
+  h3 Add A User
+.modal-body
+  ul.media-list
+    li.media.user-list-entry(ng-repeat="user in users", ng-click="$close(user)")
+      a.pull-left
+        img.media-object.img-rounded(ng-src="http://graph.facebook.com/{{user._socialIdentity.facebook.id}}/picture")
+      .media-body
+        h4.media-heading {{userName(user)}}
+          br
+          span.text-muted {{user._socialIdentity.facebook.location.name}}
+.modal-footer.text-right
+  button.btn.btn-warning(ng-click="$dismiss()") Cancel
