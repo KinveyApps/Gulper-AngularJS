@@ -1,16 +1,18 @@
 angular.module 'app.control'
 
 .controller 'app.control.room', [
-  '$scope', '$state', '$stateParams', '$kinvey', 'PubNub', 'room', 'messages', 'me',
-  ($scope, $state, $stateParams, $kinvey, PubNub, room, messages, me) ->
+  '$scope', '$state', '$stateParams', '$kinvey', 'PubNub', 'room', 'messages', 'me', '$subscriber',
+  ($scope, $state, $stateParams, $kinvey, PubNub, room, messages, me, $subscriber) ->
 
     $scope.room = room
     $scope.messages = messages
 
     $scope.$parent.notifications[room._id] = 0
+    $subscriber.subscribe room._id
 
     $scope.$on (PubNub.ngMsgEv room._id), (event, payload) ->
       $scope.$apply ->
+        console.log payload
         payload.message = JSON.parse payload.message
         if !payload.message.type
           message = new $kinvey.Message payload.message
@@ -24,8 +26,8 @@ angular.module 'app.control'
         _acl:
           r: room._acl.r
           w: room._acl.w
-      message.$save().then ->
-        $scope.text = ''
+      $scope.text = ''
+      message.$save()
 
     $scope.leaveRoom = ->
       $kinvey.rpc 'leaveRoom',

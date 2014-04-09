@@ -1,35 +1,43 @@
 angular.module 'app.control'
 
 .controller 'app.control.index', [
-  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms',
-  ($scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms) ->
+  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms', '$subscriber',
+  ($scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms, $subscriber) ->
 
     $scope.me = me
     $scope.users = users
     $scope.rooms = rooms
     $scope.notifications = {}
 
+    leftRoom = (userId, roomId) ->
+      if userId = me._id
+        rooms.splice getRoomIndex(roomId), 1
+        if $state.params.id == roomId
+          $state.go '.chatter'
+      else
+        idx = getRoomIndex(roomId)
+        newRoom = $kinvey.Room.get
+          _id: id
+        newRoom.$promise.then ->
+          rooms[idx] = newRoom
+
+    handleRoomNotification = (event, payload) ->
+      $scope.$apply ->
+        message = JSON.parse payload.message
+        if message.type == 'left-room'
+          leftRoom(message.userId, message.roomId)
+        else
+          if $state.params._id != room._id
+            $scope.notifications[room._id]++
+
+    strapRoom = (room) ->
+      $scope.notifications[room._id] = 0
+      $subscriber.subscribe room._id
+      $scope.$on (PubNub.ngMsgEv room._id), handleRoomNotification
+
     for room in rooms
       do (room) ->
-        $scope.notifications[room._id] = 0
-        PubNub.ngSubscribe
-          channel: room._id
-        $scope.$on (PubNub.ngMsgEv room._id), (event, payload) ->
-          $scope.$apply ->
-            message = JSON.parse payload.message
-            if message.type == 'left-room'
-              if message.userId = me._id
-                rooms.splice getRoomIndex(message.roomId), 1
-                if $state.params.id == message.roomId
-                  $state.go '.chatter'
-              else
-                idx = getRoomIndex(message.roomId)
-                newRoom = $kinvey.Room.get
-                  _id: id
-                newRoom.$promise.then ->
-                  rooms[idx] = newRoom
-            else
-              $scope.notifications[room._id]++
+        strapRoom(room)
 
     PubNub.ngSubscribe
       channel: me._id
@@ -51,16 +59,8 @@ angular.module 'app.control'
           resolve: 'participants'
           retainReferences: false
         room.$promise.then (room) ->
+          strapRoom(room)
           $scope.rooms.push room
-      else if payload.message.type == 'left-room'
-        if payload.message.userId = me._id
-          rooms.splice getRoomIndex(payload.message.roomId), 1
-        else
-          idx = getRoomIndex(payload.message.roomId)
-          newRoom = $kinvey.Room.get
-            _id: id
-          newRoom.$promise.then ->
-            rooms[idx] = newRoom
 
     $scope.logout = ->
         $kinvey.User.logout().$promise.then ->
