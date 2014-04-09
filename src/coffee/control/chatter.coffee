@@ -9,7 +9,7 @@ angular.module 'app.control'
 
     for room in rooms
       do (room) ->
-        $subscriber.subscriber room._id
+        $subscriber.subscribe room._id
         $scope.$on (PubNub.ngMsgEv room._id), (event, payload) ->
           message = new $kinvey.Message payload
           $scope.messages.push message

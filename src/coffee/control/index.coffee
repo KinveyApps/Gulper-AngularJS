@@ -23,6 +23,7 @@ angular.module 'app.control'
     handleRoomNotification = (event, payload, room) ->
       $scope.$apply ->
         message = JSON.parse payload.message
+        console.log message
         if message.type == 'left-room'
           leftRoom(message.userId, message.roomId)
         else if message.type == 'room-renamed'
@@ -34,13 +35,22 @@ angular.module 'app.control'
               templateUrl: 'html/deleted.html')
             .result.then ->
               $state.go 'index.chatter'
-        else if message.type = 'join-room'
+        else if message.type == 'join-room'
           roomId = message.roomId
           idx = getRoomIndex(roomId)
-          rooms[idx].$get
-            resolve: 'participants'
-            retainReferences: false
+          if idx == -1
+            $kinvey.Room.get
+              _get: roomId
+            .$promise.then (room) ->
+              strapRoom room
+              rooms.push room
+          else
+            console.log 'really? You are lying.'
+            rooms[idx].$get
+              resolve: 'participants'
+              retainReferences: false
         else
+          console.log 'got a notification'
           if $state.params._id != room._id
             $scope.notifications[room._id]++
 
@@ -113,24 +123,17 @@ angular.module 'app.control'
       if room.name && room.name.length > 0
         room.name
       else
-        console.log 'constructing the room name from '+room.participants.length+' participant names'
         count = 0
         name = ''
         for participant in room.participants
           do (participant) ->
-            console.log 'examining participant '+participant._id
             if participant._id != me._id
-              console.log 'it\'s not me'
               console.log participant
               if count++ > 0
-                console.log 'adding a spacer'
                 name += ', '
-              console.log 'adding the name'
               name += participant._socialIdentity.facebook.name
-              console.log 'name is currently '+name
         if name.length == 0
           name = 'So Lonely'
-        console.log 'came up with name: '+name
         name
 
     $scope.isActive = (room) ->

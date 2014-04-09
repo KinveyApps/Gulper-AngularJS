@@ -29,7 +29,8 @@ $btn-google-plus-border: darken($btn-google-plus-bg, 5%) !default;
   @include button-variant($btn-google-plus-color, $btn-google-plus-bg, $btn-google-plus-border);
 }
 
-$user-image-size: 44px;
+$user-image-size: 32px;
+$user-image-size-lg: 44px;
 $user-image-margin: 3px;
 $user-image-distance: 12px;
 
@@ -41,6 +42,13 @@ $user-top-spacing: 73px;
 .img-user {
   width: $user-image-size;
   height: $user-image-size;
+  margin-left: $user-image-distance;
+  margin-right: $user-image-distance;
+}
+
+.img-user-lg {
+  width: $user-image-size-lg;
+  height: $user-image-size-lg;
   margin-left: $user-image-distance;
   margin-right: $user-image-distance;
 }
