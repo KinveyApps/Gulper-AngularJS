@@ -8,8 +8,11 @@ angular.module 'app.state'
   resolve:
 
     room: ['$kinvey', '$stateParams', ($kinvey, $stateParams) ->
-      $kinvey.Room.get $stateParams
-        .$promise
+      ($kinvey.Room.get
+        _id: $stateParams._id
+        resolve: 'participants'
+        retainReferences: false
+      ).$promise
     ]
 
     messages: ['$kinvey', '$stateParams', 'room', ($kinvey, $stateParams, room) ->
@@ -18,5 +21,11 @@ angular.module 'app.state'
           room: room.$reference()
         resolve: 'from'
         retainReferences: false
+    ]
+
+    admin: ['$kinvey', 'room', ($kinvey, room) ->
+      ($kinvey.User.get
+        _id: room._acl.creator
+      ).$promise
     ]
 }
