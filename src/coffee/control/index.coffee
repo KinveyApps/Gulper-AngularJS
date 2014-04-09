@@ -18,7 +18,7 @@ angular.module 'app.control'
       $scope.$apply ->
         if !$scope.inCall
           console.log 'not in a call'
-          calloptions:
+          calloptions =
             video: true
             audio: true
           getUserMedia calloptions, (stream) ->
@@ -34,7 +34,7 @@ angular.module 'app.control'
             ), (err) -> console.log err
 
     $scope.call = (user) ->
-      calloptions:
+      calloptions =
         video: true
         audio: true
       getUserMedia calloptions, (stream) ->
