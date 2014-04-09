@@ -98,12 +98,11 @@ angular.module 'app.control'
     PubNub.ngHereNow {channel: 'online'}
 
     $scope.$on PubNub.ngPrsEv('online'), (event, payload)->
-      $scope.$apply ->
-        if payload.channel == 'online'
-          if payload.event.action == 'leave'
-            setOnlineStatus(payload.event.uuid, false)
-          else if payload.event.action == 'join'
-            setOnlineStatus(payload.event.uuid, true)
+      if payload.channel == 'online'
+        if payload.event.action == 'leave'
+          setOnlineStatus(payload.event.uuid, false)
+        else if payload.event.action == 'join'
+          setOnlineStatus(payload.event.uuid, true)
 
 
     getRoomIndex = (id) ->
