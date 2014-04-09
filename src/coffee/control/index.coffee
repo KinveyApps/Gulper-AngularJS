@@ -25,11 +25,13 @@ angular.module 'app.control'
         newRoom.$promise.then ->
           rooms[idx] = newRoom
 
-    handleRoomNotification = (event, payload) ->
+    handleRoomNotification = (event, payload, room) ->
       $scope.$apply ->
         message = JSON.parse payload.message
         if message.type == 'left-room'
           leftRoom(message.userId, message.roomId)
+        else if message.type == 'room-renamed'
+          room.name = message.name
         else
           if $state.params._id != room._id
             $scope.notifications[room._id]++
@@ -37,7 +39,7 @@ angular.module 'app.control'
     strapRoom = (room) ->
       $scope.notifications[room._id] = 0
       $subscriber.subscribe room._id
-      $scope.$on (PubNub.ngMsgEv room._id), handleRoomNotification
+      $scope.$on (PubNub.ngMsgEv room._id), (event, payload) -> handleRoomNotification event, payload, room
 
     for room in rooms
       do (room) ->
