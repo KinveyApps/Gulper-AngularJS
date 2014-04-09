@@ -42,30 +42,33 @@ angular.module 'app.control'
     showCallStream = (call, stream)->
       $scope.inCall = true
 
-      $modal.open
+      modal = $modal.open
         templateUrl: 'html/call.html'
         controller: ['$scope', 'call', ($scope, call) ->
           call.on 'close', ->
             console.log 'closing event'
-            $scope.$close()
+            try
+              $scope.$close()
         ]
         resolve:
           call: -> call
-      .result.then ->
+
+      modal.opened.then ->
+        url = (URL.createObjectURL stream)
+        tryShowVideo = ->
+          setTimeout ->
+            if $('#call').length > 0
+              $('#call').prop 'src', url
+            else
+              tryShowVideo()
+          , 10
+        tryShowVideo()
+
+      modal.result.then ->
         call.close()
       , ->
         call.close()
-
-      url = (URL.createObjectURL stream)
-      tryShowVideo = ->
-        setTimeout ->
-          if $('#call').length > 0
-            $('#call').prop 'src', url
-          else
-            tryShowVideo()
-        , 10
-      tryShowVideo()
-
+        
 
     $window.setKeyOnUserAndSave = (key, value, cb, eb) ->
       me[key] = value
