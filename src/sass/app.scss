@@ -1,4 +1,7 @@
-@import "../../lib/bootstrap-sass/vendor/assets/stylesheets/bootstrap";
+@import "../../lib/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap/variables";
+@import "../../lib/bootswatch-scss/slate/variables";
+@import "../../lib/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap/bootstrap";
+@import "../../lib/bootswatch-scss/slate/bootswatch";
 
 body {
   margin-top: $navbar-height + 12px;

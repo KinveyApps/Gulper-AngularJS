@@ -264,6 +264,7 @@ module.exports = function(grunt) {
         watch: {
             app: {
                 files: [
+                    '<%= paths.src.base %>/index.jade',
                     '<%= paths.src.base %>/<%= paths.src.coffee %>/<%= matchers.coffee %>',
                     '<%= paths.src.base %>/<%= paths.src.sass %><%= matchers.sass %>',
                     '<%= paths.src.base %>/<%= paths.src.jade %>/<%= matchers.jade %>',
