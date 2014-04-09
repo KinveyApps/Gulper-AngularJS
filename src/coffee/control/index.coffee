@@ -11,7 +11,7 @@ angular.module 'app.control'
 
     $window.setKeyOnUserAndSave = (key, value, cb, eb) ->
       me[key] = value
-      user.$save().then cb, eb
+      me.$save().then cb, eb
 
     leftRoom = (userId, roomId) ->
       if userId == me._id
