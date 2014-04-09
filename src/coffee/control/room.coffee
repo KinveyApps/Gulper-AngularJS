@@ -1,10 +1,11 @@
 angular.module 'app.control'
 
 .controller 'app.control.room', [
-  '$scope', '$state', '$stateParams', '$kinvey', 'PubNub', 'room', 'messages', 'me', '$subscriber', '$modal',
-  ($scope, $state, $stateParams, $kinvey, PubNub, room, messages, me, $subscriber, $modal) ->
+  '$scope', '$state', '$stateParams', '$kinvey', 'PubNub', 'room', 'messages', 'me', '$subscriber', '$modal', 'admin',
+  ($scope, $state, $stateParams, $kinvey, PubNub, room, messages, me, $subscriber, $modal, admin) ->
 
     $scope.room = room
+    $scope.admin = admin
     $scope.messages = messages
 
     $scope.$parent.notifications[room._id] = 0

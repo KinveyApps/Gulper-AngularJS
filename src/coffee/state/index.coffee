@@ -31,11 +31,12 @@ angular.module 'app.state'
     ]
 
     rooms: ['$kinvey', ($kinvey) ->
-      $kinvey.Room.query
+      ($kinvey.Room.query
         query:
           _id:
             $exists: true
         resolve: 'participants'
         retainReferences: false
+      ).$promise
     ]
 }

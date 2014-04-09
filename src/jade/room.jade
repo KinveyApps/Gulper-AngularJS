@@ -1,4 +1,10 @@
 .row
+  .col-sm-3.participants-row
+    img.img-rounded.img-user(ng-src="http://graph.facebook.com/{{admin._socialIdentity.facebook.id}}/picture")
+    | {{userName(admin)}} - Admin
+  .col-sm-7.participants-row.text-right
+    img.img-rounded.img-user(ng-repeat="participant in room.participants", ng-src="http://graph.facebook.com/{{participant._socialIdentity.facebook.id}}/picture", ng-show="participant._id != admin._id")
+.row
   .col-sm-10
     .chat-pane
       .row.message-row(ng-repeat="message in messages")

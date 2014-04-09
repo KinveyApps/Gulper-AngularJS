@@ -1,8 +1,8 @@
 angular.module 'app.control'
 
 .controller 'app.control.index', [
-  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms', '$subscriber',
-  ($scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms, $subscriber) ->
+  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms', '$subscriber', '$modal',
+  ($scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms, $subscriber, $modal) ->
 
     $scope.me = me
     $scope.users = users
@@ -10,13 +10,9 @@ angular.module 'app.control'
     $scope.notifications = {}
 
     leftRoom = (userId, roomId) ->
-      console.log userId+' left the room'
-      console.log 'i am '+me._id
       if userId == me._id
-        console.log 'i left a room'
         rooms.splice getRoomIndex(roomId), 1
         if $state.params._id == roomId
-          console.log 'but i\'m still there'
           $state.go 'index.chatter'
       else
         idx = getRoomIndex(roomId)
@@ -25,11 +21,20 @@ angular.module 'app.control'
         newRoom.$promise.then ->
           rooms[idx] = newRoom
 
-    handleRoomNotification = (event, payload) ->
+    handleRoomNotification = (event, payload, room) ->
       $scope.$apply ->
         message = JSON.parse payload.message
         if message.type == 'left-room'
           leftRoom(message.userId, message.roomId)
+        else if message.type == 'room-renamed'
+          room.name = message.name
+        else if message.type == 'room-deleted'
+          rooms.splice getRoomIndex(room._id), 1
+          if $state.params._id == room._id
+            ($modal.open
+              templateUrl: 'html/deleted.html')
+            .result.then ->
+              $state.go 'index.chatter'
         else
           if $state.params._id != room._id
             $scope.notifications[room._id]++
@@ -37,7 +42,7 @@ angular.module 'app.control'
     strapRoom = (room) ->
       $scope.notifications[room._id] = 0
       $subscriber.subscribe room._id
-      $scope.$on (PubNub.ngMsgEv room._id), handleRoomNotification
+      $scope.$on (PubNub.ngMsgEv room._id), (event, payload) -> handleRoomNotification event, payload, room
 
     for room in rooms
       do (room) ->
