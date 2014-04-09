@@ -49,6 +49,11 @@ angular.module 'app.control'
             console.log 'closing event'
             try
               $scope.$close()
+          call.on 'error', ->
+            console.log 'error event'
+            call.close()
+            try
+              $scope.$close()
         ]
         resolve:
           call: -> call
@@ -68,7 +73,7 @@ angular.module 'app.control'
         call.close()
       , ->
         call.close()
-        
+
 
     $window.setKeyOnUserAndSave = (key, value, cb, eb) ->
       me[key] = value
