@@ -67,8 +67,7 @@ li.dropdown > ul.dropdown-menu {
 }
 
 .user-list {
-  margin-top: $user-top-spacing;
-  height: $chat-pane-height;
+  height: $chat-pane-height + 160;
   overflow-y: auto;
 }
 
@@ -88,7 +87,7 @@ li.dropdown > ul.dropdown-menu {
 }
 
 .media {
-  padding: $large-spacing;
+  padding: 3px;
   cursor: pointer;
 }
 
