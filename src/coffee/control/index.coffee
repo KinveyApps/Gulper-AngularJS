@@ -1,8 +1,8 @@
 angular.module 'app.control'
 
 .controller 'app.control.index', [
-  '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms', '$subscriber', '$modal', '$window', '$peer',
-  ($scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms, $subscriber, $modal, $window, $peer) ->
+  '$rootScope', '$scope', '$state', '$stateParams', '$facebook', '$kinvey', 'PubNub', 'me', 'users', 'rooms', '$subscriber', '$modal', '$window', '$peer',
+  ($rootScope, $scope, $state, $stateParams, $facebook, $kinvey, PubNub, me, users, rooms, $subscriber, $modal, $window, $peer) ->
 
     $scope.me = me
     $scope.users = users
@@ -120,8 +120,10 @@ angular.module 'app.control'
               retainReferences: false
         else
           console.log 'got a notification'
+          $rootScope.$broadcast 'chatter-notification', message
           if $state.params._id != room._id
             $scope.notifications[room._id]++
+
 
     strapRoom = (room) ->
       $scope.notifications[room._id] = 0

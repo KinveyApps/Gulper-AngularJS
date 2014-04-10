@@ -7,10 +7,15 @@ angular.module 'app.control'
     $scope.rooms = rooms
     $scope.messages = messages
 
-    for room in rooms
-      do (room) ->
-        $subscriber.subscribe room._id
-        $scope.$on (PubNub.ngMsgEv room._id), (event, payload) ->
-          message = new $kinvey.Message payload
-          $scope.messages.push message
+    $scope.$on 'chatter-notification', (event, payload) ->
+      if payload.text
+        message = new $kinvey.Message payload
+        $scope.messages.push message
+        setTimeout ->
+          $('.chat-pane').animate({ scrollTop: $('.chat-pane')[0].scrollHeight }, 250)
+        , 0
+
+    setTimeout ->
+      $('.chat-pane').animate({ scrollTop: $('.chat-pane')[0].scrollHeight }, 250)
+    , 300
 ]
