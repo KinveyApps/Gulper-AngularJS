@@ -1,6 +1,8 @@
 .modal-header
   h3 Video Call
 .modal-body
-  video#call(autoplay)
+  .callWrapper
+    video#call(autoplay)
+    video#call1(autoplay)
 .modal-footer.text-right
   button.btn.btn-danger(ng-click="$dismiss()") Close

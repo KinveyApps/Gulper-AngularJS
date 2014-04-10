@@ -24,7 +24,7 @@ angular.module 'app.control'
             call.answer stream
             call.on 'stream', (remoteStream) ->
               $scope.$apply ->
-                showCallStream call, remoteStream
+                showCallStream call, remoteStream, stream
             , (err) ->
               console.log err
 
@@ -36,10 +36,10 @@ angular.module 'app.control'
         call = $peer.call user._id, stream
         call.on 'stream', ((remoteStream) ->
           $scope.$apply ->
-            showCallStream call, remoteStream
+            showCallStream call, remoteStream, stream
         ), ((err) -> console.log err)
 
-    showCallStream = (call, stream)->
+    showCallStream = (call, stream, myStream)->
       $scope.inCall = true
 
       modal = $modal.open
@@ -68,6 +68,17 @@ angular.module 'app.control'
               tryShowVideo()
           , 10
         tryShowVideo()
+
+        url1 = (URL.createObjectURL myStream)
+        tryShowVideo1 = ->
+          setTimeout ->
+            if $('#call1').length > 0
+              $('#call1').prop 'src', url1
+            else
+              tryShowVideo1()
+          , 10
+        tryShowVideo1()
+
 
       modal.result.then ->
         call.close()

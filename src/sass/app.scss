@@ -113,8 +113,22 @@ li.dropdown > ul.dropdown-menu {
 .participants-row {
   padding-top: $large-spacing;
 }
-
+.callWrapper{
+  width: 558px;
+  height: 449px;
+  position: relative;
+}
 #call {
   width: 558px;
   height: 480px;
+}
+#call1 {
+  position: absolute;
+  opacity: 1;
+  width: 130px;
+  right: 4px;
+  bottom: 4px;
+  &:hover{
+    opacity: 1;
+  }
 }
