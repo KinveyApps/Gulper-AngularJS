@@ -22,7 +22,7 @@
           button.btn.btn-default(ng-click="send(text)") Send
   .col-sm-2.room-options-pane
     ul.nav.nav-pills.nav-stacked
-      li(ng-class="{'disabled': !canLeaveRoom()}")
+      li(ng-show="canLeaveRoom()")
         a(ng-click="leaveRoom()")
           i.fa.fa-sign-out
           |  Leave Room
@@ -34,11 +34,11 @@
         a(ng-click="rename()")
           i.fa.fa-edit
           |  Rename Room
-      li(ng-class="{'disabled': !canDeleteRoom()}")
+      li(ng-show="canDeleteRoom()")
         a(ng-click="delete()")
           i.fa.fa-trash-o
           |  Delete Room
-      li(ng-class="{'disabled': !canMakeCall()}")
+      li(ng-show="canMakeCall()")
         a(ng-click="makeCall()")
           i.fa.fa-video-camera
           | Start Video Chat
