@@ -9,16 +9,18 @@ function onPostSave(request, response, modules){
         modules.logger.error('Cant find user object.');
         response.complete(404)
       }else{
-        var userObj = {
-          _id: obj._id,
-          _socialIdentity:{
-            facebook: {
-              name: obj._socialIdentity.facebook.name,
-              id: obj._socialIdentity.facebook.id
-            }
+        delete obj._push;
+        delete obj._acl;
+        delete obj._kmd;
+        if(obj._socialIdentity){
+          if(obj._socialIdentity.facebook){
+            delete obj._socialIdentity.facebook.access_token;
+          }
+          if(obj._socialIdentity.google){
+            delete obj._socialIdentity.google.access_token;
           }
         }
-        response.body.from = userObj;
+        response.body.from = obj;
         //response.body.type = 'message';
 
         //Setup pubnub
