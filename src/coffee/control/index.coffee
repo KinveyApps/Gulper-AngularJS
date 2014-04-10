@@ -212,17 +212,24 @@ angular.module 'app.control'
           if userId && myId
             foundRoom = room
 
+      console.log 'Creating room?', foundRoom
       if foundRoom
         $state.go('index.room', {_id: foundRoom._id})
       else
+        console.log 'Creating new room.'
         room = new $kinvey.Room
           _acl:
             r: [user._id, me._id]
             w: [user._id, me._id]
           participants: [me, user]
         room.$save().then (room) ->
+          console.log 'Room Saved', room
           room.participants = [me, user]
           $scope.rooms.push room
+          console.log room._id
+          $state.go('index.room', {_id: room._id})
+        , (err)->
+          console.log 'error creating room!', err
 
     $scope.roomName = (room) ->
       if room.name && room.name.length > 0

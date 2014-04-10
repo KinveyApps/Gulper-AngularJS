@@ -17,7 +17,7 @@
           | {{message.text}}
     form(role="form")
       .input-group
-        input.form-control(type="text", placeholder="Message", ng-model="text")
+        input#message.form-control(type="text", placeholder="Message", ng-model="text")
         span.input-group-btn
           button.btn.btn-default(ng-click="send(text)") Send
   .col-sm-2.room-options-pane

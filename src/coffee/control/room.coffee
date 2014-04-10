@@ -8,6 +8,11 @@ angular.module 'app.control'
     $scope.admin = admin
     $scope.messages = messages
 
+    setTimeout ->
+      $('.chat-pane').animate({ scrollTop: $('.chat-pane')[0].scrollHeight }, 250)
+      $('#message').focus()
+    , 100
+
     $scope.$parent.notifications[room._id] = 0
     $subscriber.subscribe room._id
 
@@ -17,6 +22,9 @@ angular.module 'app.control'
         if !payload.message.type
           message = new $kinvey.Message payload.message
           $scope.messages.push message
+          setTimeout ->
+            $('.chat-pane').animate({ scrollTop: $('.chat-pane')[0].scrollHeight }, 250)
+          , 0
         else if payload.message.type == 'join-room'
           room.$get
             resolve: 'participants'

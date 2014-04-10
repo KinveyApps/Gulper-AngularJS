@@ -9,20 +9,27 @@ function onPostSave(request, response, modules){
     //This is a new record
     var publishCount = 0;
     var publish = function(userId){
-      pubnub.publish({
-        channel: userId,
-        message: {type: 'new-room', id: response.body._id},
-        callback: function(datas) {
-          publishCount++;
-          if(publishCount-1 == response.body.participants.length){
-            response.continue();
-          }
-        },
-        error: function(e) {
-          modules.logger.info(e);
-          response.complete(500);
+      if(userId == response.body._acl.creator){
+        publishCount++;
+        if(publishCount == response.body.participants.length){
+          response.continue();
         }
-      });
+      }else{
+        pubnub.publish({
+          channel: userId,
+          message: {type: 'new-room', id: response.body._id},
+          callback: function(datas) {
+            publishCount++;
+            if(publishCount == response.body.participants.length){
+              response.continue();
+            }
+          },
+          error: function(e) {
+            modules.logger.info(e);
+            response.complete(500);
+          }
+        });
+      }
     };
 
     for(var i=0;i<response.body.participants.length;i++){
